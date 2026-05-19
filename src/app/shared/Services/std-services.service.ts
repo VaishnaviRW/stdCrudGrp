@@ -2,14 +2,13 @@ import { Injectable } from '@angular/core';
 import { Istudent } from '../modules/std';
 import { Observable,of } from 'rxjs';
 import { IRes } from '../modules/Istdres';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StdServicesService {
-  openSnackBar(arg0: string) {
-    throw new Error('Method not implemented.');
-  }
+ 
 
 
   stdArr : Array<Istudent> = [
@@ -60,7 +59,11 @@ export class StdServicesService {
   }
 
 ]
-  constructor() { }
+  constructor(
+      private _snackBar : MatSnackBar,
+      
+
+  ) { }
 
 
   fetchstudent():Observable<Istudent[]>{
@@ -76,7 +79,7 @@ createStudent(student: Istudent): Observable<IRes<Istudent>> {
 
   //observable ko subscribe kiya to <IRes<Istudent> ka data milega 
   return of({
-    msg: `👍Student with id ${student.stdId} added successfully !!!`,
+    msg: `Student with id ${student.stdId} added successfully !!!`,
     data: student
   })
 

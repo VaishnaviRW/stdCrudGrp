@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Istudent } from '../../modules/std';
 import { StdServicesService } from '../../Services/std-services.service';
+import { SnackBarServiceService } from '../../Services/snack-bar-service.service';
 // import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
@@ -18,7 +19,7 @@ export class StudentFormComponent implements OnInit {
 
   constructor(
 private _studentService : StdServicesService,
-private _snackBar :StdServicesService
+  private _snackBar : SnackBarServiceService
   ) { }
 
   ngOnInit(): void {
