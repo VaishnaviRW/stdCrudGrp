@@ -1,9 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Istudent } from '../../modules/std';
 import { StdServicesService } from '../../Services/std-services.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfirmDialogComponent } from '../Confirm Dialog Component/confirm-dialog.component';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { DialogService } from '../../Services/dialog.service';
+
+
+import { SnackbarService } from '../../Services/snack-bar-service.service';
+
 
 @Component({
   selector: 'app-student-table',
@@ -12,12 +17,19 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 })
 export class StudentTableComponent implements OnInit {
 
+  @Output() emitobj : EventEmitter<Istudent> = new EventEmitter<Istudent>()
+  
+
+
   stdArr: Array<Istudent> = [];
 
   constructor(
     private _studentService: StdServicesService,
     private _snackBar: MatSnackBar,
-    private _matDialog: MatDialog
+    private _matDialog: MatDialog,
+    private _dialogService: DialogService,
+    private _snackBarService: SnackbarService
+  
   ) { }
 
   ngOnInit(): void {
@@ -35,61 +47,40 @@ export class StudentTableComponent implements OnInit {
   }
   onRemoveStd(stdObj: Istudent) {
 
-    console.log(stdObj);
+    this._dialogService
+      .openConfirmDialog(
+        `Are you sure you want to remove student with id ${stdObj.stdId} ?`
+      )
+      .subscribe(res => {
   
-    let config = new MatDialogConfig();
-  
-    config.width = '300px';
-    config.disableClose = true;
-  
-    config.data = `Are you sure, you want to remove the student with id ${stdObj.stdId} ?`;
-    console.log(stdObj);
-  
-    let matDialog = this._matDialog.open(
-      ConfirmDialogComponent,
-      config
-    );
-  
-    matDialog.afterClosed()
-      .subscribe(getConfirm => {
-  
-        if (getConfirm) {
+        if (res) {
   
           this._studentService.removeStudent(stdObj)
             .subscribe({
   
-              next: res => {
+              next: () => {
   
-                console.log(res);
-  
-                this._snackBar.open(
-                  `Student with id ${stdObj.stdId} removed successfully !!`,
-                  'Close',
-                  {
-                    duration: 3000,
-                    verticalPosition: 'top'
-                  }
+                this._snackBarService.openSnackBar(
+                  `Student with id ${stdObj.stdId} removed successfully !!`
                 );
-
-                
+  
               },
   
-              error: err => {
+              error: () => {
   
-                console.log(err);
-  
-                this._snackBar.open(
-                  `Failed to remove student with id ${stdObj.stdId} !!`,
-                  'Close',
-                  {
-                    duration: 3000,
-                    verticalPosition: 'top'
-                  }
+                this._snackBarService.openSnackBar(
+                  `Failed to remove student with id ${stdObj.stdId} !!`
                 );
+  
               }
+  
             });
+  
         }
+  
       });
+  
+  
   }
 
 

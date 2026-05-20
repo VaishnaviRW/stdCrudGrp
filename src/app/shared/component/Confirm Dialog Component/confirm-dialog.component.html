@@ -1,6 +1,10 @@
-<h2 mat-dialog-title>
+<!-- <h2 mat-dialog-title>
     Are You Sure ? You Want To Remove This ID
-  </h2>
+  </h2> -->
+  <mat-dialog-content>
+    {{ message }}
+  </mat-dialog-content>
+
   
   <div mat-dialog-actions class="btnContainer">
   
@@ -17,5 +21,7 @@
       (click)="onNo()">
       No
     </button>
-  
+
+
+
   </div>

@@ -12,9 +12,12 @@ import {
 })
 export class ConfirmDialogComponent {
 
+  
+
   constructor(
     private _dialogRef: MatDialogRef<ConfirmDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    @Inject(MAT_DIALOG_DATA) public message: string
   ) { }
 
   onyes() {
