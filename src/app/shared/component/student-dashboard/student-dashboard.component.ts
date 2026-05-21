@@ -7,15 +7,18 @@ import { Istudent } from '../../modules/std';
   styleUrls: ['./student-dashboard.component.scss']
 })
 export class StudentDashboardComponent implements OnInit {
-  getEditObj !: Istudent
+
+  editObj!: Istudent;
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  geteditobj(obj: Istudent){
-    this.getEditObj = obj
+  onEdit(stdObj: Istudent) {
+
+    this.editObj = stdObj;
+
   }
 
 }

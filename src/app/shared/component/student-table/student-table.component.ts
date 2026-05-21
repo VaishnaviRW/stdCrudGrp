@@ -17,10 +17,7 @@ import { SnackbarService } from '../../Services/snack-bar-service.service';
 })
 export class StudentTableComponent implements OnInit {
 
-  @Output() emitobj : EventEmitter<Istudent> = new EventEmitter<Istudent>()
-  
-
-
+  @Output() emitEditObj = new EventEmitter<Istudent>();
   stdArr: Array<Istudent> = [];
 
   constructor(
@@ -45,6 +42,8 @@ export class StudentTableComponent implements OnInit {
       });
 
   }
+
+  
   onRemoveStd(stdObj: Istudent) {
 
     this._dialogService
@@ -83,6 +82,11 @@ export class StudentTableComponent implements OnInit {
   
   }
 
+  onEditStd(stdObj: Istudent) {
 
+    this.emitEditObj.emit(stdObj);
+
+  }
 
 }
+
